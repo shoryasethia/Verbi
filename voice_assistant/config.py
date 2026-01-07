@@ -44,6 +44,7 @@ class Config:
     ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
     LOCAL_MODEL_PATH = os.getenv("LOCAL_MODEL_PATH")
     CARTESIA_API_KEY = os.getenv("CARTESIA_API_KEY")
+    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
     # for serving the MeloTTS model
     TTS_PORT_LOCAL = 5150
@@ -64,7 +65,7 @@ class Config:
         Config._validate_model('RESPONSE_MODEL', [
             'openai', 'groq', 'ollama', 'local'])
         Config._validate_model('TTS_MODEL', [
-            'openai', 'deepgram', 'elevenlabs', 'melotts', 'cartesia', 'local', 'piper'])
+            'openai', 'deepgram', 'elevenlabs', 'melotts', 'cartesia', 'local', 'piper', 'gemini'])
 
         Config._validate_api_key('TRANSCRIPTION_MODEL', 'openai', 'OPENAI_API_KEY')
         Config._validate_api_key('TRANSCRIPTION_MODEL', 'groq', 'GROQ_API_KEY')
@@ -77,6 +78,7 @@ class Config:
         Config._validate_api_key('TTS_MODEL', 'deepgram', 'DEEPGRAM_API_KEY')
         Config._validate_api_key('TTS_MODEL', 'elevenlabs', 'ELEVENLABS_API_KEY')
         Config._validate_api_key('TTS_MODEL', 'cartesia', 'CARTESIA_API_KEY')
+        Config._validate_api_key('TTS_MODEL', 'gemini', 'GOOGLE_API_KEY')
 
     @staticmethod
     def _validate_model(attribute, valid_options):

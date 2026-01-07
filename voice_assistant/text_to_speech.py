@@ -5,6 +5,7 @@ import pyaudio
 import elevenlabs
 import soundfile as sf
 import requests
+import google.generativeai as genai
 
 from openai import OpenAI
 from deepgram import DeepgramClient, SpeakOptions
@@ -58,6 +59,28 @@ def text_to_speech(model: str, api_key:str, text:str, output_file_path:str, loca
                 model="eleven_turbo_v2"
             )
             elevenlabs.save(audio, output_file_path)
+
+        elif model == 'gemini':
+            genai.configure(api_key=api_key)
+            model_instance = genai.GenerativeModel("gemini-2.0-flash-exp")
+            
+            response = model_instance.generate_content(
+                text,
+                generation_config=genai.GenerationConfig(
+                    response_modalities=["AUDIO"],
+                    speech_config=genai.SpeechConfig(
+                        voice_config=genai.VoiceConfig(
+                            prebuilt_voice_config=genai.PrebuiltVoiceConfig(
+                                voice_name="Aoede"
+                            )
+                        )
+                    )
+                )
+            )
+            
+            # Save the audio content to file
+            with open(output_file_path, "wb") as f:
+                f.write(response.candidates[0].content.parts[0].inline_data.data)
         
         elif model == "cartesia":
             client = Cartesia(api_key=api_key)
