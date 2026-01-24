@@ -21,9 +21,13 @@ class Config:
         LOCAL_MODEL_PATH (str): Path to the local model.
     """
     # Model selection
-    TRANSCRIPTION_MODEL = 'deepgram'  # possible values: openai, groq, deepgram, fastwhisperapi
-    RESPONSE_MODEL = 'openai'  # possible values: openai, groq, ollama
-    TTS_MODEL = 'openai'  # possible values: openai, deepgram, elevenlabs, melotts, cartesia, piper
+    TRANSCRIPTION_MODEL = 'groq'  # possible values: openai, groq, deepgram, fastwhisperapi
+    RESPONSE_MODEL = 'groq'  # possible values: openai, groq, ollama
+    TTS_MODEL = 'gemini'  # possible values: openai, deepgram, elevenlabs, melotts, cartesia, piper, gemini
+
+    # Gemini TTS configuration
+    GEMINI_TTS_MODEL = "gemini-2.5-flash-preview-tts" # https://ai.google.dev/gemini-api/docs/speech-generation#supported-models
+    GEMINI_TTS_VOICE = "Aoede" # https://ai.google.dev/gemini-api/docs/speech-generation#voices
 
     # Piper Server configuration
     PIPER_SERVER_URL = os.getenv("PIPER_SERVER_URL")

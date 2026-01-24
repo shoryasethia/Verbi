@@ -62,7 +62,7 @@ def text_to_speech(model: str, api_key:str, text:str, output_file_path:str, loca
 
         elif model == 'gemini':
             genai.configure(api_key=api_key)
-            model_instance = genai.GenerativeModel("gemini-2.0-flash-exp")
+            model_instance = genai.GenerativeModel(Config.GEMINI_TTS_MODEL)
             
             response = model_instance.generate_content(
                 text,
@@ -71,7 +71,7 @@ def text_to_speech(model: str, api_key:str, text:str, output_file_path:str, loca
                     speech_config=genai.SpeechConfig(
                         voice_config=genai.VoiceConfig(
                             prebuilt_voice_config=genai.PrebuiltVoiceConfig(
-                                voice_name="Aoede"
+                                voice_name=Config.GEMINI_TTS_VOICE
                             )
                         )
                     )
