@@ -8,7 +8,7 @@ import requests
 import google.generativeai as genai
 
 from openai import OpenAI
-from deepgram import DeepgramClient, SpeakOptions
+from deepgram import DeepgramClient
 from elevenlabs.client import ElevenLabs
 from cartesia import Cartesia
 
@@ -42,13 +42,14 @@ def text_to_speech(model: str, api_key:str, text:str, output_file_path:str, loca
 
         elif model == 'deepgram':
             client = DeepgramClient(api_key=api_key)
-            options = SpeakOptions(
-                model="aura-arcas-en", #"aura-luna-en", # https://developers.deepgram.com/docs/tts-models
-                encoding="linear16",
-                container="wav"
+            response = client.speak.v1.audio.generate(
+                text=text,
+                model="aura-arcas-en",  # https://developers.deepgram.com/docs/tts-models
             )
-            SPEAK_OPTIONS = {"text": text}
-            response = client.speak.v("1").save(output_file_path, SPEAK_OPTIONS, options)
+            
+            # Save the audio file
+            with open(output_file_path, "wb") as audio_file:
+                audio_file.write(response.stream.getvalue())
         
         elif model == 'elevenlabs':
             client = ElevenLabs(api_key=api_key)
