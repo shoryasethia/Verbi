@@ -5,6 +5,7 @@ import pyaudio
 import elevenlabs
 import soundfile as sf
 import requests
+import wave
 from google import genai
 from google.genai import types
 
@@ -80,10 +81,15 @@ def text_to_speech(model: str, api_key:str, text:str, output_file_path:str, loca
                 )
             )
             
-            # Save the audio content to file
+            # Get PCM audio data and save as proper WAV file with headers
             audio_data = response.candidates[0].content.parts[0].inline_data.data
-            with open(output_file_path, "wb") as f:
-                f.write(audio_data)
+            
+            # Write as WAV file with proper headers (24kHz, 16-bit, mono)
+            with wave.open(output_file_path, "wb") as wf:
+                wf.setnchannels(1)  # mono
+                wf.setsampwidth(2)  # 16-bit
+                wf.setframerate(24000)  # 24kHz sample rate
+                wf.writeframes(audio_data)
         
         elif model == "cartesia":
             client = Cartesia(api_key=api_key)
