@@ -35,4 +35,4 @@ cartesia
 soundfile
 ollama
 pydub
-google-generativeai
+google-genai

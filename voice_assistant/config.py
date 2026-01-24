@@ -38,7 +38,7 @@ class Config:
 
     # LLM Selection
     OLLAMA_LLM="llama3:8b"
-    GROQ_LLM="llama3-8b-8192"
+    GROQ_LLM="llama-3.3-70b-versatile"  # Updated from decommissioned llama3-8b-8192
     OPENAI_LLM="gpt-4o"
 
     # API keys and paths
